@@ -80,3 +80,16 @@ MRI regional measurements
     │
     ▼
 MRI encoder/classifier ───────► MRI prediction
+
+
+## Expected Deliverables
+1. A documented data collection and cohort-selection process.
+2. A reproducible cleaning and feature-extraction pipeline.
+3. Exploratory visualizations of the available measurements.
+4. Unimodal baselines and, if matched data permit, a controlled multimodal comparison.
+5. Quantitative evaluation, feature interpretation, and a discussion of limitations.
+6. A final report and presentation describing findings, including negative results.
+
+## Team members:
+ - Aoming Liu (amliu@bu.edu)
+ - Runkun Guo (stsun@bu.edu)
