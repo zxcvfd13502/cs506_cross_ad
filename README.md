@@ -129,9 +129,8 @@ If the matched MRI–molecular cohort is too small, we will reduce the feature s
 
 This repository currently contains the proposal only. Implementation, environment setup, run instructions, and tests will be added as the project develops.
 
-## Team and Course
+## Team members:
 
-- **Team members:** To be added.
-- **Repository owner:** [zxcvfd13502](https://github.com/zxcvfd13502)
-- **Course:** CAS CS 506 — Tools for Data Science, Boston University
-- **Assignment:** [Final project requirements and proposal rubric](https://gallettilance.github.io/final_project/)
+- Aoming Liu (amliu@bu.edu)
+- Runkun Guo (stsun@bu.edu)
+
