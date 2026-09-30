@@ -81,6 +81,19 @@ MRI regional measurements
     ▼
 MRI encoder/classifier ───────► MRI prediction
 
+```
+
+## Eight-Week Timeline
+
+| Period | Planned Work | Milestone |
+| --- | --- | --- |
+| Weeks 1–2 | Obtain the EEG dataset; request or confirm ADNI access; audit diagnostic labels, sample sizes, missingness, and the availability of paired EEG–MRI data | Finalize the feasible project scope and cohort definitions |
+| Weeks 3–4 | Implement EEG and MRI preprocessing; extract spectral, connectivity, and regional MRI features; create exploratory visualizations | Complete cleaned feature tables and initial unimodal baselines |
+| Weeks 5–6 | Train and tune EEG-only and MRI-only models; implement the two-channel fusion interface; train the fusion model only if paired data are available | Complete unimodal comparisons and, if feasible, the EEG–MRI fusion analysis |
+| Week 7 | Evaluate the final models; analyze classification errors, feature importance, and modality contributions | Finalize quantitative results and interpretation |
+| Week 8 | Consolidate the code, figures, documentation, report, and presentation | Complete the GitHub repository, final report, and presentation |
+
+The schedule is approximate and will be aligned with the course’s October and November check-ins.
 
 ## Expected Deliverables
 1. A documented data collection and cohort-selection process.
