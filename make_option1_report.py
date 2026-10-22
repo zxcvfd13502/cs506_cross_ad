@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 
 # same figure style, palette and helpers as the data report
-from make_data_report import COL, GRID, INK, INK2, SURFACE, save, table
+from make_data_report import ACKNOWLEDGMENTS_HTML, COL, GRID, INK, INK2, SURFACE, save, table
 
 TRACKS = [("eeg_cv", "all", "EEG cross-validation (132 subjects)"),
           ("eeg_xfer:BrainLat->ds004504", "all", "EEG transfer: BrainLat → ds004504"),
@@ -215,6 +215,7 @@ with diagnosis in BrainLat. Details: <code>reports/data_introduction.pdf</code>.
 <li>BrainLat confounds (recording type matches diagnosis, AD older and less educated) limit what the BrainLat numbers mean.</li>
 <li>Next: nested-CV tuning, EEG connectivity features, global-only EEG features for cross-dataset robustness, feature importance; and paired EEG–MRI fusion once BrainLat MRI download access is granted.</li>
 </ul>
+{ACKNOWLEDGMENTS_HTML}
 """
 
     css = f"""

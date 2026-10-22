@@ -1,7 +1,7 @@
 # CROSS-AD: Two-Channel EEG–MRI Learning for Explainable Alzheimer’s Disease Prediction
 
 **CAS CS 506 — Tools for Data Science, Boston University**  
-**Status:** Project proposal. Data collection, implementation, and experiments are planned; no results are claimed yet.
+**Status:** In progress. Data collection, preprocessing and unimodal EEG and MRI baselines are done, along with a first unpaired joint EEG–MRI model ("Option 1"). Paired EEG–MRI fusion is still pending. See [Current Progress](#current-progress-code-data-and-option-1-results) and `reports/option1_results.pdf`.
 
 ## Project Description
 

@@ -41,6 +41,24 @@ DIVERGING = LinearSegmentedColormap.from_list(
 DX = ["CN", "AD"]
 REGIONS = ["global", "frontal", "central", "temporal", "posterior"]
 BRAINLAT_EEG = "/projectnb/mlresearch/Runkun/brainlat_eeg_full"
+
+# required by the ADNI Data Use Agreement in anything published; also cites the EEG datasets
+ACKNOWLEDGMENTS_HTML = """
+<div class="keep"><h2>Acknowledgments and data sources</h2>
+<p class="note">Data collection and sharing for this project was funded by the Alzheimer's Disease
+Neuroimaging Initiative (ADNI) (National Institutes of Health Grant U01 AG024904) and DOD ADNI
+(Department of Defense award number W81XWH-12-2-0012). Data used in preparation of this work were
+obtained from the ADNI database (adni.loni.usc.edu). As such, the investigators within the ADNI
+contributed to the design and implementation of ADNI and/or provided data but did not participate in
+analysis or writing of this report. A complete listing of ADNI investigators can be found at
+http://adni.loni.usc.edu/wp-content/uploads/how_to_apply/ADNI_Acknowledgement_List.pdf</p>
+<p class="note">BrainLat EEG: Prado P. et al., The BrainLat project, a multimodal neuroimaging dataset
+of neurodegeneration from underrepresented backgrounds, Scientific Data 10, 889 (2023);
+Synapse syn51549340.</p>
+<p class="note">ds004504 EEG: Miltiadous A. et al., A dataset of scalp EEG recordings of Alzheimer's
+disease, frontotemporal dementia and healthy subjects from routine EEG, Data 8(6), 95 (2023);
+OpenNeuro ds004504 (CC0).</p></div>
+"""
 DS_EEG = "/projectnb/mlresearch/Runkun/ds004504"
 
 plt.rcParams.update({
@@ -483,6 +501,7 @@ central features are noisier than the others.</p>
 <tr><td><code>processed/eeg/brainlat_verification.csv</code>, <code>processed/ds004504_verification.csv</code></td><td>Download checks (file present, size, loads, sfreq, channels, duration)</td></tr>
 <tr><td><code>processed/eeg/synapse_ad_search.csv</code></td><td>Every AD file on BrainLat Synapse (metadata)</td></tr>
 </tbody></table></div>
+{ACKNOWLEDGMENTS_HTML}
 """
 
     css = f"""
