@@ -1,0 +1,16 @@
+#!/bin/bash -l
+# Download the BrainLat AD resting-state .set files that the manifest folders did not include.
+# Submit from /project/mlresearch/Runkun:   qsub fetch_ad.qsub
+#$ -P mlresearch
+#$ -N fetch_ad
+#$ -l download
+#$ -l h_rt=12:00:00
+#$ -j y
+
+module load python3
+export PATH=$HOME/.local/bin:$PATH
+
+cd /project/mlresearch/Runkun
+python fetch_brainlat_ad.py --search processed/eeg/synapse_ad_search.csv \
+    --dest /projectnb/mlresearch/Runkun/brainlat_eeg_full
+du -sh /projectnb/mlresearch/Runkun/brainlat_eeg_full

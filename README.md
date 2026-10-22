@@ -103,6 +103,58 @@ The schedule is approximate and will be aligned with the course’s October and 
 5. Quantitative evaluation, feature interpretation, and a discussion of limitations.
 6. A final report and presentation describing findings, including negative results.
 
+## Current Progress: Code, Data and Option 1 Results
+
+Unpaired EEG and structural MRI cohorts (AD vs. cognitively normal) trained into one
+shared embedding ("Option 1" prototype), with baselines and ablations.
+
+**No subject-level ADNI or BrainLat data is in this repository.** Both datasets forbid
+redistribution; get them from the sources below and run the pipeline to rebuild
+`processed/`. The only data tables included are derived from OpenNeuro ds004504 (CC0).
+
+### Data sources
+
+| Dataset | Modality | Access |
+|---|---|---|
+| ADNI | 3T structural MRI, UCSF FreeSurfer 7 regional measures | [IDA](https://ida.loni.usc.edu) (application required). Export `UCSFFSX7`, `DXSUM`, `PTDEMOG`, `DATADIC`, `Key_MRI` into `MRI/` |
+| BrainLat | Resting-state EEG (EEGLAB .set/.fdt) | [Synapse syn51549340](https://www.synapse.org/#!Synapse:syn51549340) (conditions of use). Needs a Synapse token in `~/.synapseConfig` |
+| OpenNeuro ds004504 | Resting-state EEG (AD/FTD/CN), BIDS | [openneuro.org/datasets/ds004504](https://openneuro.org/datasets/ds004504), CC0 |
+
+### Pipeline
+
+Job files (`*.qsub`) are written for the BU SCC (project `mlresearch`, paths under
+`/project` and `/projectnb`); edit the paths to run elsewhere.
+
+| Step | Scripts | Output |
+|---|---|---|
+| 1 Download | `search_synapse_ad.py`, `fetch_brainlat_ad.py` (`fetch_ad.qsub`), `fetch_brainlat_fdt.py` (`fetch_fdt.qsub`), `fetch_ds004504.qsub`, `download_adni_images.qsub` (not run yet) | raw data on `/projectnb` |
+| 2 Verify | `verify_brainlat_eeg.py`, `verify_ds004504.py` | `processed/*verification.csv` |
+| 3 Preprocess | `build_adni_cohort.py` + `prepare_brainlat_eeg.py` (`run_pipeline.qsub`), `prepare_ds004504_eeg.py` | `processed/mri`, `processed/eeg_full`, `processed/ds004504` |
+| 4 Data report | `make_data_report.py` | `reports/data_introduction.*` |
+| 5 Model | `train_option1.py` (`train_option1.qsub`) | `results/option1/` |
+| 6 Results report | `make_option1_report.py` | `reports/option1_results.*` |
+
+Environment on the SCC: `module load python3/3.10.12 pytorch/1.13.1`.
+
+`github_upload_manifest.csv` lists every file in the project and whether it may be shared.
+
+### Acknowledgments
+
+Data collection and sharing for this project was funded by the Alzheimer's Disease
+Neuroimaging Initiative (ADNI) (National Institutes of Health Grant U01 AG024904) and
+DOD ADNI (Department of Defense award number W81XWH-12-2-0012). Data used in preparation
+of this work were obtained from the ADNI database (adni.loni.usc.edu). As such, the
+investigators within the ADNI contributed to the design and implementation of ADNI and/or
+provided data but did not participate in analysis or writing of this work. A complete
+listing of ADNI investigators can be found at
+http://adni.loni.usc.edu/wp-content/uploads/how_to_apply/ADNI_Acknowledgement_List.pdf
+
+BrainLat: Prado P. et al., "The BrainLat project, a multimodal neuroimaging dataset of
+neurodegeneration from underrepresented backgrounds", *Scientific Data* 10, 889 (2023).
+
+ds004504: Miltiadous A. et al., "A dataset of scalp EEG recordings of Alzheimer's
+disease, frontotemporal dementia and healthy subjects from routine EEG", *Data* 8(6), 95 (2023).
+
 ## Team members:
  - Aoming Liu (amliu@bu.edu)
  - Runkun Guo (stsun@bu.edu)

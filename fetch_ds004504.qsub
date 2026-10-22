@@ -1,0 +1,16 @@
+#!/bin/bash -l
+# Download OpenNeuro ds004504 (AD / FTD / CN resting-state EEG) from the public S3 bucket.
+# Submit from /project/mlresearch/Runkun:   qsub fetch_ds004504.qsub
+#$ -P mlresearch
+#$ -N fetch_ds004504
+#$ -l download
+#$ -l h_rt=12:00:00
+#$ -j y
+
+module load awscli
+DEST=/projectnb/mlresearch/Runkun/ds004504
+mkdir -p $DEST
+# sync is restartable: resubmitting only fetches what is missing
+aws s3 sync --no-sign-request --no-progress s3://openneuro.org/ds004504 $DEST
+echo "files: $(find $DEST -type f | wc -l)"
+du -sh $DEST

@@ -1,0 +1,89 @@
+participant_id,group,dx,file,kind,orig_sfreq,orig_nchan,orig_seconds,status
+sub-001,A,AD,sub-001_task-eyesclosed_eeg.set,continuous,500.0,19.0,599.8,ok
+sub-002,A,AD,sub-002_task-eyesclosed_eeg.set,continuous,500.0,19.0,793.1,ok
+sub-003,A,AD,sub-003_task-eyesclosed_eeg.set,continuous,500.0,19.0,307.1,ok
+sub-004,A,AD,sub-004_task-eyesclosed_eeg.set,continuous,500.0,19.0,707.1,ok
+sub-005,A,AD,sub-005_task-eyesclosed_eeg.set,continuous,500.0,19.0,804.1,ok
+sub-006,A,AD,sub-006_task-eyesclosed_eeg.set,continuous,500.0,19.0,637.1,ok
+sub-007,A,AD,sub-007_task-eyesclosed_eeg.set,continuous,500.0,19.0,769.1,ok
+sub-008,A,AD,sub-008_task-eyesclosed_eeg.set,continuous,500.0,19.0,799.1,ok
+sub-009,A,AD,sub-009_task-eyesclosed_eeg.set,continuous,500.0,19.0,613.6,ok
+sub-010,A,AD,sub-010_task-eyesclosed_eeg.set,continuous,500.0,19.0,1291.1,ok
+sub-011,A,AD,sub-011_task-eyesclosed_eeg.set,continuous,500.0,19.0,771.6,ok
+sub-012,A,AD,sub-012_task-eyesclosed_eeg.set,continuous,500.0,19.0,898.3,ok
+sub-013,A,AD,sub-013_task-eyesclosed_eeg.set,continuous,500.0,19.0,840.1,ok
+sub-014,A,AD,sub-014_task-eyesclosed_eeg.set,continuous,500.0,19.0,945.2,ok
+sub-015,A,AD,sub-015_task-eyesclosed_eeg.set,continuous,500.0,19.0,910.1,ok
+sub-016,A,AD,sub-016_task-eyesclosed_eeg.set,continuous,500.0,19.0,985.1,ok
+sub-017,A,AD,sub-017_task-eyesclosed_eeg.set,continuous,500.0,19.0,847.1,ok
+sub-018,A,AD,sub-018_task-eyesclosed_eeg.set,continuous,500.0,19.0,847.1,ok
+sub-019,A,AD,sub-019_task-eyesclosed_eeg.set,continuous,500.0,19.0,920.3,ok
+sub-020,A,AD,sub-020_task-eyesclosed_eeg.set,continuous,500.0,19.0,869.3,ok
+sub-021,A,AD,sub-021_task-eyesclosed_eeg.set,continuous,500.0,19.0,923.3,ok
+sub-022,A,AD,sub-022_task-eyesclosed_eeg.set,continuous,500.0,19.0,823.6,ok
+sub-023,A,AD,sub-023_task-eyesclosed_eeg.set,continuous,500.0,19.0,862.6,ok
+sub-024,A,AD,sub-024_task-eyesclosed_eeg.set,continuous,500.0,19.0,767.5,ok
+sub-025,A,AD,sub-025_task-eyesclosed_eeg.set,continuous,500.0,19.0,698.4,ok
+sub-026,A,AD,sub-026_task-eyesclosed_eeg.set,continuous,500.0,19.0,917.4,ok
+sub-027,A,AD,sub-027_task-eyesclosed_eeg.set,continuous,500.0,19.0,830.9,ok
+sub-028,A,AD,sub-028_task-eyesclosed_eeg.set,continuous,500.0,19.0,826.5,ok
+sub-029,A,AD,sub-029_task-eyesclosed_eeg.set,continuous,500.0,19.0,740.7,ok
+sub-030,A,AD,sub-030_task-eyesclosed_eeg.set,continuous,500.0,19.0,557.1,ok
+sub-031,A,AD,sub-031_task-eyesclosed_eeg.set,continuous,500.0,19.0,1156.8,ok
+sub-032,A,AD,sub-032_task-eyesclosed_eeg.set,continuous,500.0,19.0,854.9,ok
+sub-033,A,AD,sub-033_task-eyesclosed_eeg.set,continuous,500.0,19.0,707.1,ok
+sub-034,A,AD,sub-034_task-eyesclosed_eeg.set,continuous,500.0,19.0,970.9,ok
+sub-035,A,AD,sub-035_task-eyesclosed_eeg.set,continuous,500.0,19.0,757.1,ok
+sub-036,A,AD,sub-036_task-eyesclosed_eeg.set,continuous,500.0,19.0,853.1,ok
+sub-037,C,CN,sub-037_task-eyesclosed_eeg.set,continuous,500.0,19.0,777.1,ok
+sub-038,C,CN,sub-038_task-eyesclosed_eeg.set,continuous,500.0,19.0,894.1,ok
+sub-039,C,CN,sub-039_task-eyesclosed_eeg.set,continuous,500.0,19.0,857.1,ok
+sub-040,C,CN,sub-040_task-eyesclosed_eeg.set,continuous,500.0,19.0,1017.1,ok
+sub-041,C,CN,sub-041_task-eyesclosed_eeg.set,continuous,500.0,19.0,887.1,ok
+sub-042,C,CN,sub-042_task-eyesclosed_eeg.set,continuous,500.0,19.0,975.1,ok
+sub-043,C,CN,sub-043_task-eyesclosed_eeg.set,continuous,500.0,19.0,829.1,ok
+sub-044,C,CN,sub-044_task-eyesclosed_eeg.set,continuous,500.0,19.0,881.6,ok
+sub-045,C,CN,sub-045_task-eyesclosed_eeg.set,continuous,500.0,19.0,862.7,ok
+sub-046,C,CN,sub-046_task-eyesclosed_eeg.set,continuous,500.0,19.0,758.4,ok
+sub-047,C,CN,sub-047_task-eyesclosed_eeg.set,continuous,500.0,19.0,808.0,ok
+sub-048,C,CN,sub-048_task-eyesclosed_eeg.set,continuous,500.0,19.0,1013.4,ok
+sub-049,C,CN,sub-049_task-eyesclosed_eeg.set,continuous,500.0,19.0,784.2,ok
+sub-050,C,CN,sub-050_task-eyesclosed_eeg.set,continuous,500.0,19.0,826.7,ok
+sub-051,C,CN,sub-051_task-eyesclosed_eeg.set,continuous,500.0,19.0,787.3,ok
+sub-052,C,CN,sub-052_task-eyesclosed_eeg.set,continuous,500.0,19.0,761.1,ok
+sub-053,C,CN,sub-053_task-eyesclosed_eeg.set,continuous,500.0,19.0,799.3,ok
+sub-054,C,CN,sub-054_task-eyesclosed_eeg.set,continuous,500.0,19.0,842.3,ok
+sub-055,C,CN,sub-055_task-eyesclosed_eeg.set,continuous,500.0,19.0,824.0,ok
+sub-056,C,CN,sub-056_task-eyesclosed_eeg.set,continuous,500.0,19.0,885.4,ok
+sub-057,C,CN,sub-057_task-eyesclosed_eeg.set,continuous,500.0,19.0,796.5,ok
+sub-058,C,CN,sub-058_task-eyesclosed_eeg.set,continuous,500.0,19.0,762.8,ok
+sub-059,C,CN,sub-059_task-eyesclosed_eeg.set,continuous,500.0,19.0,789.8,ok
+sub-060,C,CN,sub-060_task-eyesclosed_eeg.set,continuous,500.0,19.0,751.5,ok
+sub-061,C,CN,sub-061_task-eyesclosed_eeg.set,continuous,500.0,19.0,807.3,ok
+sub-062,C,CN,sub-062_task-eyesclosed_eeg.set,continuous,500.0,19.0,912.1,ok
+sub-063,C,CN,sub-063_task-eyesclosed_eeg.set,continuous,500.0,19.0,809.3,ok
+sub-064,C,CN,sub-064_task-eyesclosed_eeg.set,continuous,500.0,19.0,849.1,ok
+sub-065,C,CN,sub-065_task-eyesclosed_eeg.set,continuous,500.0,19.0,884.1,ok
+sub-066,F,FTD,sub-066_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-067,F,FTD,sub-067_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-068,F,FTD,sub-068_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-069,F,FTD,sub-069_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-070,F,FTD,sub-070_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-071,F,FTD,sub-071_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-072,F,FTD,sub-072_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-073,F,FTD,sub-073_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-074,F,FTD,sub-074_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-075,F,FTD,sub-075_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-076,F,FTD,sub-076_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-077,F,FTD,sub-077_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-078,F,FTD,sub-078_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-079,F,FTD,sub-079_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-080,F,FTD,sub-080_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-081,F,FTD,sub-081_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-082,F,FTD,sub-082_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-083,F,FTD,sub-083_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-084,F,FTD,sub-084_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-085,F,FTD,sub-085_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-086,F,FTD,sub-086_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-087,F,FTD,sub-087_task-eyesclosed_eeg.set,,,,,skipped: group FTD
+sub-088,F,FTD,sub-088_task-eyesclosed_eeg.set,,,,,skipped: group FTD

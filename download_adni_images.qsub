@@ -1,0 +1,26 @@
+#!/bin/bash -l
+# Download ADNI image zips onto the SCC from the URL list IDA gives you
+# ("Download Image URLs" for your collection). Signed URLs expire, so submit soon.
+# Usage:  qsub download_adni_images.qsub /path/to/image_urls_file
+#$ -P mlresearch
+#$ -N adni_dl
+#$ -l download
+#$ -l h_rt=24:00:00
+#$ -j y
+
+URLS=${1:?give the IDA URL file as the first argument}
+DEST=/projectnb/mlresearch/Runkun/ADNI_images
+mkdir -p $DEST/zips
+cd $DEST/zips
+
+# pull every http(s) link out of the file, whatever its format (txt or csv)
+grep -oE 'https?://[^",[:space:]]+' "$URLS" | sort -u > urls.txt
+echo "Downloading $(wc -l < urls.txt) files to $DEST/zips"
+
+# -c resumes partial files if the job is resubmitted
+wget -c --content-disposition --tries=5 --no-verbose -i urls.txt
+
+for z in *.zip; do
+    unzip -n -q "$z" -d $DEST/unzipped && echo "unzipped $z"
+done
+du -sh $DEST

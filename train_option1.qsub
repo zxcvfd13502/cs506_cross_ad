@@ -1,0 +1,12 @@
+#!/bin/bash -l
+# Option 1 prototype: shared EEG/MRI embedding, baselines and ablations.
+# Submit from /project/mlresearch/Runkun:   qsub train_option1.qsub
+#$ -P mlresearch
+#$ -N option1
+#$ -l h_rt=02:00:00
+#$ -pe omp 4
+#$ -j y
+
+module load python3/3.10.12 pytorch/1.13.1
+cd /project/mlresearch/Runkun
+python train_option1.py --out results/option1

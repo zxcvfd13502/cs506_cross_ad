@@ -1,0 +1,35 @@
+# Allowlist: ignore everything, then re-include what may be shared.
+# ADNI (Data Use Agreement) and BrainLat (Synapse conditions of use) data, raw or
+# derived, must never be committed. See github_upload_manifest.csv for the reasons.
+/*
+!/.gitignore
+!/README.md
+!/github_upload_manifest.csv
+!/*.py
+!/*.qsub
+
+# ds004504 (OpenNeuro, CC0) derived tables only
+!/processed/
+/processed/*
+!/processed/ds004504/
+/processed/ds004504/*
+!/processed/ds004504/eeg_features.csv
+!/processed/ds004504/eeg_inventory.csv
+!/processed/ds004504_verification.csv
+
+# aggregate results only (oof_predictions.csv has per-subject ADNI/BrainLat IDs)
+!/results/
+/results/*
+!/results/option1/
+/results/option1/*
+!/results/option1/summary.csv
+!/results/option1/per_repeat_scores.csv
+!/results/option1/hyperparameters.csv
+
+!/reports/
+
+# never
+.synapseConfig
+__pycache__/
+*.pyc
+*.o[0-9]*

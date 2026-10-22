@@ -1,0 +1,16 @@
+#!/bin/bash -l
+# Download the missing BrainLat .fdt files (and copy the .set headers next to them).
+# Submit from /project/mlresearch/Runkun:   qsub fetch_fdt.qsub
+#$ -P mlresearch
+#$ -N fetch_fdt
+#$ -l download
+#$ -l h_rt=12:00:00
+#$ -j y
+
+module load python3
+export PATH=$HOME/.local/bin:$PATH
+
+cd /project/mlresearch/Runkun
+python fetch_brainlat_fdt.py --eeg-dir /project/mlresearch/Runkun/EEG \
+    --dest /projectnb/mlresearch/Runkun/brainlat_eeg_full
+du -sh /projectnb/mlresearch/Runkun/brainlat_eeg_full
