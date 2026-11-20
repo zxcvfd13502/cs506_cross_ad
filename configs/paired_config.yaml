@@ -1,0 +1,80 @@
+# CROSS-AD paired EEG + structural MRI experiment (BrainLat, Synapse syn51549340).
+# Every paired_*.py script reads this file (--config configs/paired_config.yaml).
+# Participant-level outputs go to paths.work (outside the repo, never in git);
+# only aggregate tables go to paths.results.
+
+data:
+  root: /projectnb/mlresearch/Runkun/brainlat_synapse
+  # BrainLat MRI demographics: one row per MRI participant, documents MRI_ID <-> EEG_ID
+  demographics: MRI data/BrainLat_Demographic_MRI.csv
+  eeg_dir: EEG data
+  mri_dir: MRI data
+  # site folders holding the BIDS MRI release. "BrainLat_dataset_NewIDs" is a second
+  # copy of the same files (checked in the audit) and is only used as a fallback.
+  mri_sites: [AR, CLA, CLB, COA, COB, MXA, MXB, PE]
+  mri_fallback_dirs: [BrainLat_dataset_NewIDs]
+
+paths:
+  work: /projectnb/mlresearch/Runkun/derivatives/paired   # manifests, features, predictions
+  results: results/paired                                  # aggregate metrics (git-safe)
+  smoke_results: results/paired_smoke
+
+task:
+  # Preferred: CN / MCI / AD. BrainLat documents CN, AD, FTD, PD, MS (no MCI), so the
+  # audit falls back to the binary task below. Labels come only from the diagnosis column.
+  preferred_classes: [CN, MCI, AD]
+  fallback_classes: [CN, AD]
+  min_participants_per_class: 10
+
+pairing:
+  # BrainLat is cross-sectional: one assessment per participant, no session column.
+  # Pairing uses the documented MRI_ID <-> EEG_ID columns only. Scan acquisition times
+  # in *_scans.tsv are anonymised (shifted to 1925) and EEG has no dates, so no
+  # date window is used; set max_days_apart only if real dates become available.
+  rule: documented_id
+  max_days_apart: null
+  # EEG files stored under an MRI subject folder (MRI data/<site>/sub-X/eeg/) belong to
+  # that MRI participant by BIDS layout. They are used as a fallback copy for a
+  # documented pair; participants whose only link is this layout are listed but
+  # excluded unless this is true.
+  allow_bids_layout_only_pairs: false
+
+eeg:
+  exclude_name_parts: [extero, MW, reject]   # task / rejected recordings
+  l_freq: 1.0
+  h_freq: 30.0
+  sfreq: 256
+  max_seconds: 300
+  epoch_seconds: 2.0
+  # epoch rejection: peak-to-peak above max(abs_uv, median + mad_k * MAD) over epochs
+  reject_abs_uv: 150
+  reject_mad_k: 4.0
+  min_clean_epochs: 30
+  aggregate: median                          # one feature vector per visit
+
+mri:
+  method: synthseg                           # FreeSurfer mri_synthseg --parc --robust
+  freesurfer_home: /share/pkg.8/freesurfer/8.2.0/install
+  threads: 8                                 # match -pe omp in paired_features.qsub
+  min_qc: 0.65                               # SynthSeg automated QC; lower = flagged
+  # a-priori AD-signature regions (left + right summed, divided by intracranial volume).
+  # "all" uses every SynthSeg volume and relies on train-only feature selection.
+  feature_set: ad_signature
+
+cv:
+  outer_folds: 5
+  repeats: 10
+  inner_folds: 3            # tuning splits inside each outer training set
+  seed: 2026
+  bootstrap: 2000           # participant-level bootstrap for fusion - best single
+
+model:
+  logreg_C: [0.01, 0.1, 1.0]
+  select_k: null            # train-only SelectKBest per modality (null = off)
+  emb_dim: 8
+  hidden: 16
+  dropout: 0.3
+  lr: 0.003
+  epochs: 200
+  weight_decay: [0.001, 0.01, 0.1]   # tuned on inner folds
+  batch_size: 0                     # 0 = full batch

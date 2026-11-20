@@ -1,0 +1,33 @@
+#!/bin/bash -l
+# Build the ADNI MRI cohort and the BrainLat EEG feature table on the SCC.
+# Submit from the repo root:   qsub run_pipeline.qsub
+#$ -P mlresearch
+#$ -N cross_ad_prep
+#$ -l h_rt=04:00:00
+#$ -pe omp 4
+#$ -j y
+
+module load python3            # use `module avail python3` to pick a specific version
+cd /project/mlresearch/Runkun   # repo root (edit to your clone)
+export OMP_NUM_THREADS=4
+
+BASE=/project/mlresearch/Runkun
+OUT=$BASE/processed
+mkdir -p $OUT
+
+# ---- MRI: ADNI AD vs CN, 3T only, CN matched 2:1 to AD on age and sex -----------
+python -m crossad.preprocess.build_adni_cohort \
+    --fs      $BASE/MRI/All_Subjects_UCSFFSX7.csv \
+    --dxsum   $BASE/MRI/All_Subjects_DXSUM.csv \
+    --ptdemog $BASE/MRI/All_Subjects_PTDEMOG.csv \
+    --datadic $BASE/MRI/DATADIC.csv \
+    --keymri  $BASE/MRI/All_Subjects_Key_MRI.csv \
+    --field-strength 3.0 --match-ratio 2 \
+    --out $OUT/mri
+
+# ---- EEG: BrainLat AD vs HC resting state -> harmonized spectral features --------
+# Option 1 used an earlier AD/HC-only BrainLat download (brainlat_eeg_full). The full release is
+# now fetched by jobs/fetch_brainlat_all.qsub; Option 1 has not been re-run on that layout.
+python -m crossad.preprocess.prepare_brainlat_eeg \
+    --eeg-dir /projectnb/mlresearch/Runkun/brainlat_eeg_full \
+    --out $OUT/eeg_full

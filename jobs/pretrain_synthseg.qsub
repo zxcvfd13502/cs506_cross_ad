@@ -1,0 +1,18 @@
+#!/bin/bash -l
+# CROSS-AD pretrain-then-fuse: SynthSeg on the unpaired MRI pool, as an array job.
+# Each task segments every 20th scan; scans already segmented (e.g. the 25 paired) are skipped.
+# Submit from the repo root:   qsub pretrain_synthseg.qsub
+#$ -P mlresearch
+#$ -N pt_synthseg
+#$ -t 1-20
+#$ -l h_rt=04:00:00
+#$ -pe omp 8
+#$ -j y
+
+module load python3/3.10.12 pytorch/1.13.1
+export OMP_NUM_THREADS=8
+export PYTHONUNBUFFERED=1
+cd /project/mlresearch/Runkun   # repo root (edit to your clone)
+python -m crossad.paired.paired_mri_features --config configs/paired_config.yaml \
+    --cohort /projectnb/mlresearch/Runkun/derivatives/pretrain/mri_pool.csv \
+    --shard $((SGE_TASK_ID - 1))/20

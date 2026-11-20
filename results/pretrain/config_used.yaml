@@ -1,0 +1,33 @@
+paired_config: paired_config.yaml
+classes:
+- CN
+- AD
+paths:
+  work: /projectnb/mlresearch/Runkun/derivatives/pretrain
+  results: results/pretrain
+  report_dir: /projectnb/mlresearch/Runkun/reports
+pretrain:
+  mri_pools:
+    all: null
+    mixed_sites:
+    - CLB
+    - COB
+    - PE
+    clb_only:
+    - CLB
+  main_mri_pool: all
+  emb_dim: 8
+  hidden: 16
+  dropout: 0.3
+  lr: 0.003
+  epochs: 300
+  weight_decay:
+  - 0.001
+  - 0.01
+  - 0.1
+  val_fraction: 0.2
+fusion:
+  logreg_C:
+  - 0.01
+  - 0.1
+  - 1.0

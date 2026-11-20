@@ -1,0 +1,54 @@
+{
+  "classes": [
+    "CN",
+    "AD"
+  ],
+  "n_paired": 25,
+  "repeats": 10,
+  "outer_folds": 5,
+  "splits_identical_to_paired_run": true,
+  "mri_pool": {
+    "n": 404,
+    "by_dx": {
+      "AD": 227,
+      "CN": 177
+    },
+    "by_site": {
+      "CLB": 181,
+      "PE": 80,
+      "COB": 67,
+      "COA": 28,
+      "AR": 21,
+      "MXB": 21,
+      "CLA": 4,
+      "MXA": 2
+    }
+  },
+  "eeg_pool": {
+    "n": 72,
+    "by_dx": {
+      "CN": 37,
+      "AD": 35
+    },
+    "by_site": {
+      "CL": 37,
+      "AR": 35
+    }
+  },
+  "pool_rows_without_features": {
+    "mri": 0,
+    "eeg": 0
+  },
+  "paired_feature_max_abs_diff": {
+    "mri": 0.0,
+    "eeg": 8.881784197001252e-16
+  },
+  "mri_near_duplicates_removed": 1,
+  "mri_max_profile_r_paired_vs_pool": 1.0000000000000002,
+  "n_eeg_features": 26,
+  "n_mri_features": 16,
+  "test_participants_in_pretraining": 0,
+  "runtime_s": 782.3,
+  "python": "3.10.12",
+  "torch": "1.13.1+cu116"
+}

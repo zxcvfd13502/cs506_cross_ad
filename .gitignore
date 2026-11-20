@@ -1,12 +1,15 @@
 # Allowlist: ignore everything, then re-include what may be shared.
 # ADNI (Data Use Agreement) and BrainLat (Synapse conditions of use) data, raw or
-# derived, must never be committed. See github_upload_manifest.csv for the reasons.
+# derived, must never be committed. See docs/github_upload_manifest.csv for the reasons.
 /*
 !/.gitignore
 !/README.md
-!/github_upload_manifest.csv
-!/*.py
-!/*.qsub
+!/crossad/
+!/configs/
+!/jobs/
+!/tests/
+!/docs/
+!/reports/
 
 # ds004504 (OpenNeuro, CC0) derived tables only
 !/processed/
@@ -17,7 +20,8 @@
 !/processed/ds004504/eeg_inventory.csv
 !/processed/ds004504_verification.csv
 
-# aggregate results only (oof_predictions.csv has per-subject ADNI/BrainLat IDs)
+# aggregate results only. Participant-level manifests, features, splits and predictions
+# are written to paths.work in configs/*.yaml (/projectnb/.../derivatives), outside the repo.
 !/results/
 /results/*
 !/results/option1/
@@ -25,10 +29,12 @@
 !/results/option1/summary.csv
 !/results/option1/per_repeat_scores.csv
 !/results/option1/hyperparameters.csv
-
-!/reports/
+!/results/paired/
+!/results/pretrain/
 
 # never
+oof_predictions.csv
+splits.csv
 .synapseConfig
 __pycache__/
 *.pyc

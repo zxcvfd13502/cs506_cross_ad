@@ -1,0 +1,17 @@
+#!/bin/bash -l
+# CROSS-AD paired cohort: smoke test, then baselines + single-modality + fusion comparison.
+# Needs the outputs of paired_features.qsub. Submit from the repo root:
+#   qsub paired_train.qsub
+#$ -P mlresearch
+#$ -N paired_train
+#$ -l h_rt=02:00:00
+#$ -pe omp 4
+#$ -j y
+
+module load python3/3.10.12 pytorch/1.13.1
+export OMP_NUM_THREADS=1      # tiny networks: one thread is fastest
+export PYTHONUNBUFFERED=1
+cd /project/mlresearch/Runkun   # repo root (edit to your clone)
+set -e
+python -m tests.paired_smoke_test --config configs/paired_config.yaml
+python -m crossad.paired.paired_train      --config configs/paired_config.yaml

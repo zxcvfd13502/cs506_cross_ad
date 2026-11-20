@@ -1,0 +1,18 @@
+#!/bin/bash -l
+# CROSS-AD paired cohort: audit + pairing, EEG features, SynthSeg MRI features.
+# Submit from the repo root:   qsub paired_features.qsub
+# Re-runnable: SynthSeg skips participants whose volumes already exist.
+#$ -P mlresearch
+#$ -N paired_features
+#$ -l h_rt=04:00:00
+#$ -pe omp 8
+#$ -j y
+
+module load python3/3.10.12 pytorch/1.13.1
+export OMP_NUM_THREADS=8
+export PYTHONUNBUFFERED=1
+cd /project/mlresearch/Runkun   # repo root (edit to your clone)
+set -e
+python -m crossad.paired.paired_audit        --config configs/paired_config.yaml
+python -m crossad.paired.paired_eeg_features --config configs/paired_config.yaml
+python -m crossad.paired.paired_mri_features --config configs/paired_config.yaml

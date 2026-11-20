@@ -1,0 +1,21 @@
+{
+  "tag": "real",
+  "classes": [
+    "CN",
+    "AD"
+  ],
+  "n_participants": 25,
+  "n_rows": 25,
+  "by_dx": {
+    "AD": 15,
+    "CN": 10
+  },
+  "n_eeg_features": 26,
+  "n_mri_features": 16,
+  "best_single_modality_model": "mlp_mri",
+  "splits_sha256": "286535f645fcb763e26a778a91d7b2ab9773f773e1acf399f8a9bd5e7bca2c13",
+  "participant_overlap_between_train_and_test": 0,
+  "runtime_s": 2933.0,
+  "python": "3.10.12",
+  "torch": "1.13.1+cu116"
+}
