@@ -168,13 +168,12 @@ processed/               ds004504-derived tables (CC0)
 
 ### Running the pipeline (BU SCC)
 
-Job files in `jobs/` are written for the BU SCC (project `mlresearch`); each `cd`s to the
-repo root, so edit that line and the data paths in `configs/` to run elsewhere.
+Job files in `jobs/` are written and running in the my personal work space in BU SCC; the training data requires access under NIH or NSF grant number. If you want to reproduce the training part, please contact the data owner on ADNI and Synapse.
 
 ```bash
 module load python3/3.10.12 pytorch/1.13.1
-pip install --user mne==1.6.1            # mne is not in the SCC python3 module
-# FreeSurfer 8.2 (mri_synthseg) is needed for the MRI features
+pip install --user mne==1.6.1            
+
 
 # 1. data: full BrainLat release (EEG + MRI, ~105 GB)
 qsub jobs/fetch_brainlat_all.qsub
@@ -185,14 +184,10 @@ qsub jobs/paired_train.qsub              # smoke test, then 8 paired-only models
 
 # 3. two-channel pretrain-then-fuse
 python -m crossad.pretrain.pretrain_cohorts --config configs/pretrain_config.yaml
-qsub jobs/pretrain_synthseg.qsub         # SynthSeg on the unpaired MRI pool (array job)
+qsub jobs/pretrain_synthseg.qsub        
 qsub -hold_jid pt_synthseg jobs/pretrain_features.qsub
 python -m crossad.pretrain.pretrain_train --config configs/pretrain_config.yaml
 
-# 4. reports
-python -m crossad.reports.make_pretrain_report --config configs/pretrain_config.yaml \
-    --findings results/pretrain/findings.html
-python -m crossad.reports.make_two_channel_report     # -> reports/two_channel_report.pdf
 ```
 
 | Stage | Module | Aggregate output (committed) |
