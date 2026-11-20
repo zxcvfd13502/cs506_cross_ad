@@ -1,0 +1,75 @@
+{
+  "task_classes": [
+    "CN",
+    "AD"
+  ],
+  "task_reason": "preferred classes ['CN', 'MCI', 'AD'] not all documented (absent: ['MCI']); labels present: {'CN': 245, 'AD': 270, 'FTD': 163, 'PD': 57, 'MS': 27}. Using ['CN', 'AD']. FTD/PD/MS are distinct diagnoses and are not merged into AD or CN.",
+  "labels_in_table": {
+    "CN": 245,
+    "AD": 270,
+    "FTD": 163,
+    "PD": 57,
+    "MS": 27
+  },
+  "missing_labels": 0,
+  "duplicated_mri_id_rows": 2,
+  "duplicated_eeg_id_rows": 2,
+  "duplicated_mri_id_dx": {
+    "PD": 2
+  },
+  "duplicated_eeg_id_dx": {
+    "FTD": 2
+  },
+  "visits_per_participant": 1,
+  "session_key": "none (BrainLat is cross-sectional; one visit per participant)",
+  "pairing_rule": "MRI_ID <-> EEG_ID in MRI data/BrainLat_Demographic_MRI.csv",
+  "date_window_days": null,
+  "mri_participants_in_release": 625,
+  "mri_participants_with_t1": 560,
+  "t1_copy_check_site_vs_newids": {
+    "identical": 527,
+    "differs": 32
+  },
+  "mri_modalities_file_counts": {
+    "T1w": 573,
+    "task-rest_bold": 285,
+    "dwi": 250,
+    "FLAIR": 59,
+    "task-resting_bold": 57,
+    "T2w": 14,
+    "run-1_T1w": 5,
+    "acq-realc_T1w": 3,
+    "part-real_T1w": 2,
+    "acq-realb_T1w": 2,
+    "T1wa": 2,
+    "acq-reala_T1w": 2,
+    "T1wd": 1,
+    "T1wc": 1,
+    "T1wb": 1,
+    "malformed dwi filename (participant ID removed)": 1
+  },
+  "mri_regional_measures_distributed": false,
+  "eeg_resting_files_by_data_status": {
+    "embedded": 54,
+    "fdt present": 71,
+    "fdt missing": 14
+  },
+  "eeg_records_participants_without_mri_link": {
+    "FTD": 1,
+    "MS": 32,
+    "AD": 3,
+    "CN": 5
+  },
+  "included_by_dx": {
+    "AD": 15,
+    "CN": 10
+  },
+  "included_by_site": {
+    "CLB": 25
+  },
+  "included_eeg_source": {
+    "eeg_tree": 20,
+    "mri_tree_bids": 5
+  },
+  "flagged_included": 0
+}

@@ -1,7 +1,7 @@
 # CROSS-AD: Two-Channel EEG–MRI Learning for Explainable Alzheimer’s Disease Prediction
 
 **CAS CS 506 — Tools for Data Science, Boston University**  
-**Status:** In progress. Data collection, preprocessing and unimodal EEG and MRI baselines are done, along with a first unpaired joint EEG–MRI model ("Option 1"). Paired EEG–MRI fusion is still pending. See [Current Progress](#current-progress-code-data-and-option-1-results) and `reports/option1_results.pdf`.
+**Status:** In progress. Data collection, preprocessing, unimodal EEG and MRI baselines, the unpaired "Option 1" prototype and a **paired two-channel EEG + MRI model** are done. The two-channel model reaches macro-F1 0.840 on the 25 paired BrainLat participants. See [Current Progress](#current-progress-two-channel-eeg--mri-model) and `reports/two_channel_report.pdf`.
 
 ## Project Description
 
@@ -103,40 +103,112 @@ The schedule is approximate and will be aligned with the course’s October and 
 5. Quantitative evaluation, feature interpretation, and a discussion of limitations.
 6. A final report and presentation describing findings, including negative results.
 
-## Current Progress: Code, Data and Option 1 Results
+## Current Progress: Two-Channel EEG + MRI Model
 
-Unpaired EEG and structural MRI cohorts (AD vs. cognitively normal) trained into one
-shared embedding ("Option 1" prototype), with baselines and ablations.
+BrainLat's MRI demographics table documents an `EEG_ID` for some MRI participants, so a
+genuinely paired EEG + structural MRI cohort exists inside BrainLat: **25 AD/CN participants
+(15 AD, 10 CN, site CLB)**. On this cohort we trained and compared single-channel and
+two-channel models on identical cross-validation splits (10 repeats × 5 folds).
+
+| Model | Channels | macro-F1 (mean ± SD) | ROC AUC |
+|---|---|---|---|
+| **Pretrained encoders → concat → logistic regression (main)** | EEG + MRI | **0.840 ± 0.039** | **0.905** |
+| Pretrained MRI encoder → logistic regression | MRI | 0.784 ± 0.048 | 0.849 |
+| Paired-only MLP fusion (concat) | EEG + MRI | 0.777 ± 0.036 | 0.862 |
+| Paired-only MRI MLP | MRI | 0.748 ± 0.064 | 0.845 |
+| Paired-only EEG MLP | EEG | 0.664 ± 0.042 | 0.745 |
+| Pretrained EEG encoder → logistic regression | EEG | 0.641 ± 0.023 | 0.689 |
+| Logistic regression on age + sex | none | 0.475 ± 0.044 | 0.493 |
+
+- **Two channels beat one.** MRI and EEG misclassify different people (5 MRI errors, 9 EEG
+  errors, 1 shared); fusion corrects 4 of the 5 MRI errors.
+- **Pretrain-then-fuse.** Each channel's encoder is pretrained on all unpaired BrainLat CN/AD
+  data (404 T1 scans, 72 EEG recordings), frozen, and only a 17-parameter logistic-regression
+  head is fitted on the paired participants. Test participants are removed from the
+  pretraining pools in every split.
+- **Uncertainty.** With 25 test participants, the gain over EEG alone is significant
+  (+0.199, 95% CI +0.068 to +0.344); the gain over MRI alone (+0.056, CI −0.066 to +0.192) is not.
+
+Full methods, testing protocol, figures and interpretation: **`reports/two_channel_report.pdf`**.
+Earlier reports: `reports/pretrain_fusion_report.html`, `reports/option1_results.pdf`
+(unpaired "Option 1" prototype), `reports/data_introduction.pdf`.
 
 **No subject-level ADNI or BrainLat data is in this repository.** Both datasets forbid
-redistribution; get them from the sources below and run the pipeline to rebuild
-`processed/`. The only data tables included are derived from OpenNeuro ds004504 (CC0).
+redistribution; get them from the sources below and run the pipeline. Participant-level
+outputs (manifests, features, splits, predictions) are written to `paths.work` in
+`configs/*.yaml`, outside the repo; only aggregate tables are committed.
+`docs/github_upload_manifest.csv` lists every file and whether it may be shared.
+
+### Repository layout
+
+```text
+crossad/                 Python package (run modules from the repo root with python -m)
+  data/                  download and verify raw data (BrainLat via Synapse, ds004504)
+  preprocess/            EEG harmonisation + spectral features, ADNI MRI cohort
+  option1/               Option 1: shared embedding from unpaired cohorts
+  paired/                paired cohort audit, EEG/MRI features, paired-only models
+  pretrain/              pretrain-then-fuse two-channel model (main model)
+  reports/               report generators (HTML/PDF)
+configs/                 paired_config.yaml, pretrain_config.yaml (all paths and settings)
+jobs/                    SCC batch jobs (*.qsub)
+tests/                   smoke test on synthetic features
+results/                 aggregate results: option1/, paired/, pretrain/
+reports/                 generated reports and figures
+docs/                    data-sharing manifest, proposal slides
+processed/               ds004504-derived tables (CC0)
+```
 
 ### Data sources
 
 | Dataset | Modality | Access |
 |---|---|---|
-| ADNI | 3T structural MRI, UCSF FreeSurfer 7 regional measures | [IDA](https://ida.loni.usc.edu) (application required). Export `UCSFFSX7`, `DXSUM`, `PTDEMOG`, `DATADIC`, `Key_MRI` into `MRI/` |
-| BrainLat | Resting-state EEG (EEGLAB .set/.fdt) | [Synapse syn51549340](https://www.synapse.org/#!Synapse:syn51549340) (conditions of use). Needs a Synapse token in `~/.synapseConfig` |
-| OpenNeuro ds004504 | Resting-state EEG (AD/FTD/CN), BIDS | [openneuro.org/datasets/ds004504](https://openneuro.org/datasets/ds004504), CC0 |
+| BrainLat | Resting-state EEG (EEGLAB .set/.fdt) and T1 MRI (BIDS) | [Synapse syn51549340](https://www.synapse.org/#!Synapse:syn51549340) (conditions of use). Needs a Synapse token in `~/.synapseConfig` |
+| ADNI | 3T structural MRI, UCSF FreeSurfer 7 regional measures (Option 1 only) | [IDA](https://ida.loni.usc.edu) (application required). Export `UCSFFSX7`, `DXSUM`, `PTDEMOG`, `DATADIC`, `Key_MRI` into `MRI/` |
+| OpenNeuro ds004504 | Resting-state EEG (AD/FTD/CN), BIDS (Option 1 only) | [openneuro.org/datasets/ds004504](https://openneuro.org/datasets/ds004504), CC0 |
 
-### Pipeline
+### Running the pipeline (BU SCC)
 
-Job files (`*.qsub`) are written for the BU SCC (project `mlresearch`, paths under
-`/project` and `/projectnb`); edit the paths to run elsewhere.
+Job files in `jobs/` are written for the BU SCC (project `mlresearch`); each `cd`s to the
+repo root, so edit that line and the data paths in `configs/` to run elsewhere.
 
-| Step | Scripts | Output |
+```bash
+module load python3/3.10.12 pytorch/1.13.1
+pip install --user mne==1.6.1            # mne is not in the SCC python3 module
+# FreeSurfer 8.2 (mri_synthseg) is needed for the MRI features
+
+# 1. data: full BrainLat release (EEG + MRI, ~105 GB)
+qsub jobs/fetch_brainlat_all.qsub
+
+# 2. paired cohort: audit + pairing, EEG features, SynthSeg MRI features; then models
+qsub jobs/paired_features.qsub           # paired_audit, paired_eeg_features, paired_mri_features
+qsub jobs/paired_train.qsub              # smoke test, then 8 paired-only models
+
+# 3. two-channel pretrain-then-fuse
+python -m crossad.pretrain.pretrain_cohorts --config configs/pretrain_config.yaml
+qsub jobs/pretrain_synthseg.qsub         # SynthSeg on the unpaired MRI pool (array job)
+qsub -hold_jid pt_synthseg jobs/pretrain_features.qsub
+python -m crossad.pretrain.pretrain_train --config configs/pretrain_config.yaml
+
+# 4. reports
+python -m crossad.reports.make_pretrain_report --config configs/pretrain_config.yaml \
+    --findings results/pretrain/findings.html
+python -m crossad.reports.make_two_channel_report     # -> reports/two_channel_report.pdf
+```
+
+| Stage | Module | Aggregate output (committed) |
 |---|---|---|
-| 1 Download | `search_synapse_ad.py`, `fetch_brainlat_ad.py` (`fetch_ad.qsub`), `fetch_brainlat_fdt.py` (`fetch_fdt.qsub`), `fetch_ds004504.qsub`, `download_adni_images.qsub` (not run yet) | raw data on `/projectnb` |
-| 2 Verify | `verify_brainlat_eeg.py`, `verify_ds004504.py` | `processed/*verification.csv` |
-| 3 Preprocess | `build_adni_cohort.py` + `prepare_brainlat_eeg.py` (`run_pipeline.qsub`), `prepare_ds004504_eeg.py` | `processed/mri`, `processed/eeg_full`, `processed/ds004504` |
-| 4 Data report | `make_data_report.py` | `reports/data_introduction.*` |
-| 5 Model | `train_option1.py` (`train_option1.qsub`) | `results/option1/` |
-| 6 Results report | `make_option1_report.py` | `reports/option1_results.*` |
+| Paired audit | `crossad.paired.paired_audit` | `results/paired/audit_*` |
+| EEG features | `crossad.paired.paired_eeg_features` (1–30 Hz, 2 s epochs, regional relative band power, θ/α, peak alpha) | `results/paired/eeg_qc_summary.csv` |
+| MRI features | `crossad.paired.paired_mri_features` (SynthSeg `--parc --robust`, 16 AD-signature volumes / ICV) | `results/paired/mri_qc_summary.csv` |
+| Paired-only models | `crossad.paired.paired_train` | `results/paired/metrics_*`, `fusion_vs_single.csv` |
+| Pretraining pools | `crossad.pretrain.pretrain_cohorts` | `results/pretrain/pool_counts.csv` |
+| Two-channel model | `crossad.pretrain.pretrain_train` | `results/pretrain/metrics_*`, `comparisons.csv`, `pretrain_encoders.csv` |
 
-Environment on the SCC: `module load python3/3.10.12 pytorch/1.13.1`.
-
-`github_upload_manifest.csv` lists every file in the project and whether it may be shared.
+**Option 1 (unpaired prototype, October).** `jobs/run_pipeline.qsub` builds the ADNI MRI
+cohort and BrainLat EEG features (`crossad.preprocess`), `jobs/fetch_ds004504.qsub` and
+`crossad.preprocess.prepare_ds004504_eeg` add ds004504, `jobs/train_option1.qsub` trains the
+model (`results/option1/`), and `crossad.reports.make_data_report` /
+`make_option1_report` write the reports.
 
 ### Acknowledgments
 

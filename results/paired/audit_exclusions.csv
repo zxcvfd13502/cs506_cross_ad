@@ -1,0 +1,6 @@
+exclusion_reason,AD,CN
+MRI participant not in Synapse release,13,18
+no EEG signal (fdt missing),0,3
+no T1w volume (other MRI only),4,10
+no documented EEG_ID,237,204
+no documented EEG_ID (EEG only via BIDS layout),1,0

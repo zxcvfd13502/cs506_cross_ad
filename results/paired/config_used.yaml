@@ -1,0 +1,75 @@
+data:
+  root: /projectnb/mlresearch/Runkun/brainlat_synapse
+  demographics: MRI data/BrainLat_Demographic_MRI.csv
+  eeg_dir: EEG data
+  mri_dir: MRI data
+  mri_sites:
+  - AR
+  - CLA
+  - CLB
+  - COA
+  - COB
+  - MXA
+  - MXB
+  - PE
+  mri_fallback_dirs:
+  - BrainLat_dataset_NewIDs
+paths:
+  work: /projectnb/mlresearch/Runkun/derivatives/paired
+  results: results/paired
+  smoke_results: results/paired_smoke
+task:
+  preferred_classes:
+  - CN
+  - MCI
+  - AD
+  fallback_classes:
+  - CN
+  - AD
+  min_participants_per_class: 10
+pairing:
+  rule: documented_id
+  max_days_apart: null
+  allow_bids_layout_only_pairs: false
+eeg:
+  exclude_name_parts:
+  - extero
+  - MW
+  - reject
+  l_freq: 1.0
+  h_freq: 30.0
+  sfreq: 256
+  max_seconds: 300
+  epoch_seconds: 2.0
+  reject_abs_uv: 150
+  reject_mad_k: 4.0
+  min_clean_epochs: 30
+  aggregate: median
+mri:
+  method: synthseg
+  freesurfer_home: /share/pkg.8/freesurfer/8.2.0/install
+  threads: 8
+  min_qc: 0.65
+  feature_set: ad_signature
+cv:
+  outer_folds: 5
+  repeats: 10
+  inner_folds: 3
+  seed: 2026
+  bootstrap: 2000
+model:
+  logreg_C:
+  - 0.01
+  - 0.1
+  - 1.0
+  select_k: null
+  emb_dim: 8
+  hidden: 16
+  dropout: 0.3
+  lr: 0.003
+  epochs: 200
+  weight_decay:
+  - 0.001
+  - 0.01
+  - 0.1
+  batch_size: 0

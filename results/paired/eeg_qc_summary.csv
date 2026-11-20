@@ -1,0 +1,5 @@
+,orig_sfreq,orig_sfreq,orig_sfreq,orig_nchan,orig_nchan,orig_nchan,orig_seconds,orig_seconds,orig_seconds,n_epochs,n_epochs,n_epochs,n_clean_epochs,n_clean_epochs,n_clean_epochs,n_bad_channels,n_bad_channels,n_bad_channels,n
+,median,min,max,median,min,max,median,min,max,median,min,max,median,min,max,median,min,max,ok
+dx,,,,,,,,,,,,,,,,,,,
+AD,512.0,512.0,512.0,128.0,128,128,527.8,165.7,677.7,150.0,82,150,150.0,82,150,2.0,0,19,15
+CN,512.0,512.0,512.0,128.0,128,128,580.2,512.7,629.5,150.0,150,150,150.0,148,150,1.0,0,7,10

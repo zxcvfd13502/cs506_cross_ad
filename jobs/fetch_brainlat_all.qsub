@@ -1,0 +1,17 @@
+#!/bin/bash -l
+# Download the full BrainLat dataset (EEG + MRI, ~105 GB) from Synapse.
+# Submit from the repo root:   qsub fetch_brainlat_all.qsub
+# Safe to resubmit (download queue max is 24 h): files already downloaded are skipped.
+#$ -P mlresearch
+#$ -N fetch_brainlat_all
+#$ -l download
+#$ -l h_rt=24:00:00
+#$ -j y
+
+module load python3
+export PATH=$HOME/.local/bin:$PATH
+
+cd /project/mlresearch/Runkun   # repo root (edit to your clone)
+python -m crossad.data.fetch_brainlat_all --dest /projectnb/mlresearch/Runkun/brainlat_synapse
+du -sh "/projectnb/mlresearch/Runkun/brainlat_synapse/BrainLat_dataset/EEG data" \
+       "/projectnb/mlresearch/Runkun/brainlat_synapse/BrainLat_dataset/MRI data"

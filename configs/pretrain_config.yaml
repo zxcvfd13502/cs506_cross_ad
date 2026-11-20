@@ -1,0 +1,34 @@
+# CROSS-AD pretrain-then-fuse ("model 1"): single-modality encoders pretrained on the
+# unpaired BrainLat pools, frozen, then a small fusion head fitted on the 25 paired
+# participants. Feature extraction settings (EEG cleaning, SynthSeg, feature sets) and the
+# paired cohort come from configs/paired_config.yaml, so features are identical to the paired run.
+paired_config: configs/paired_config.yaml
+
+classes: [CN, AD]
+
+paths:
+  work: /projectnb/mlresearch/Runkun/derivatives/pretrain   # pools, pool features, predictions
+  results: results/pretrain                                 # aggregate tables (git-safe)
+  report_dir: reports                                      # HTML report (in the repo)
+
+pretrain:
+  # MRI pool variants. Several BrainLat sites contribute only one diagnosis (AR/COA/MXA CN
+  # only, CLA/MXB AD only), so site and diagnosis are confounded in the full pool.
+  mri_pools:
+    all: null                     # every site
+    mixed_sites: [CLB, COB, PE]   # sites that have both CN and AD
+    clb_only: [CLB]               # same site/scanner as every paired participant
+  main_mri_pool: all
+  emb_dim: 8
+  hidden: 16
+  dropout: 0.3
+  lr: 0.003
+  epochs: 300
+  weight_decay: [0.001, 0.01, 0.1]   # chosen on a stratified 20% validation split of the pool
+  val_fraction: 0.2
+
+fusion:
+  logreg_C: [0.01, 0.1, 1.0]        # tuned on inner folds of the paired training set
+
+# outer splits: regenerated from configs/paired_config.yaml cv settings and checked against the
+# paired run's splits.csv, so every model is scored on identical folds

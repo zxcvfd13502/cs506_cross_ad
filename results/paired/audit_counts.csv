@@ -1,0 +1,7 @@
+stage,AD,CN,FTD,MS,PD,total
+1 rows in diagnosis table (unique MRI_ID),270,245,163,27,56,761
+2 documented EEG_ID,32,41,18,0,14,105
+3 + MRI participant in Synapse release,19,23,5,0,14,61
+4 + T1w volume,15,13,5,0,2,35
+5 + EEG file with signal,15,10,5,0,0,30
+"6 included (task classes, unambiguous, labels agree)",15,10,0,0,0,25

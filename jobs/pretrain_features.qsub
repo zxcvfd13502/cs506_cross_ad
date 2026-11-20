@@ -1,0 +1,20 @@
+#!/bin/bash -l
+# CROSS-AD pretrain-then-fuse: EEG features for the EEG pool, then collect SynthSeg volumes
+# for the MRI pool (run after pretrain_synthseg.qsub finishes:  qsub -hold_jid pt_synthseg ...).
+#$ -P mlresearch
+#$ -N pt_features
+#$ -l h_rt=03:00:00
+#$ -pe omp 4
+#$ -j y
+
+module load python3/3.10.12 pytorch/1.13.1
+export OMP_NUM_THREADS=4
+export PYTHONUNBUFFERED=1
+cd /project/mlresearch/Runkun   # repo root (edit to your clone)
+set -e
+W=/projectnb/mlresearch/Runkun/derivatives/pretrain
+python -m crossad.paired.paired_eeg_features --config configs/paired_config.yaml --cohort $W/eeg_pool.csv \
+    --work $W --id-col participant --out $W/eeg_pool_features.csv
+python -m crossad.paired.paired_mri_features --config configs/paired_config.yaml --cohort $W/mri_pool.csv \
+    --work $W --collect-only
+mv $W/mri_features.csv $W/mri_pool_features.csv

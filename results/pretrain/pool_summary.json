@@ -1,0 +1,26 @@
+{
+  "classes": [
+    "CN",
+    "AD"
+  ],
+  "mri_pool": {
+    "n": 405,
+    "by_dx": {
+      "AD": 227,
+      "CN": 178
+    },
+    "n_paired": 25
+  },
+  "eeg_files_in_AD_HC_folders": 81,
+  "eeg_excluded": {
+    "no signal (fdt missing)": 9
+  },
+  "eeg_pool": {
+    "n": 72,
+    "by_dx": {
+      "CN": 37,
+      "AD": 35
+    },
+    "n_paired": 25
+  }
+}

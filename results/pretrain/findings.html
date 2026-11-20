@@ -1,0 +1,25 @@
+<div class="box">
+<h3 style="margin-top:0">Findings</h3>
+<ul>
+<li><b>Pretrain-then-fuse is the best model so far, but the gain over the paired-only models is not established.</b>
+Macro-F1 0.840 ± 0.039 (ROC AUC 0.905) vs 0.777 for the paired-only MLP fusion: +0.063, 95% CI
+[−0.034, +0.168]. The bootstrap puts 89% of resamples above zero, but 25 participants cannot rule out no difference.</li>
+<li><b>The gain comes from the MRI side.</b> The MRI encoder pretrained on 399 scans, frozen, gives 0.784 with
+a paired-fitted head and 0.744 with no paired fitting at all, matching the paired-only MRI MLP (0.748)
+without seeing the paired training labels.</li>
+<li><b>EEG pretraining did not work.</b> The EEG encoder reaches only 0.55 macro-F1 on its own
+validation split (≈ chance) with 67 recordings from two sites, and the pretrained EEG model (0.641) is no
+better than the paired-only EEG MLP (0.664).</li>
+<li><b>Fusion vs MRI alone is still not significant</b> (+0.056, CI [−0.066, +0.192]). Fusion vs EEG
+alone is (+0.199, CI [+0.068, +0.344]).</li>
+<li><b>Site confounding in the MRI pool does not drive the result.</b> Restricting the MRI pool to sites
+with both diagnoses (0.818) or to the paired site CLB only (0.825) gives about the same performance as the
+full pool (0.840).</li>
+<li><b>Stacking the two pretrained heads' logits (0.788) is significantly worse than concatenating
+embeddings</b> (−0.052, CI [−0.098, −0.012]). Averaging them with no paired fitting (0.787) is on par with
+the paired-only fusion.</li>
+<li><b>Data issue found and handled:</b> one unpaired scan is voxel-identical to the T1 of a paired
+participant, although the two IDs have different listed ages and sexes. It was removed from the
+MRI pool, so the pool has 404 scans. Without this check, a test participant's MRI would have been in pretraining.</li>
+</ul>
+</div>
